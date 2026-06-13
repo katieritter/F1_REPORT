@@ -14,6 +14,7 @@ the laps parquet is still written. Retry pits once the live session has ended.
 from __future__ import annotations
 
 import argparse
+import time
 from pathlib import Path
 
 import fastf1
@@ -79,38 +80,57 @@ def build_season_laps(year: int, rounds: list[int] | None = None) -> pd.DataFram
 
 
 def fetch_season_pits(year: int) -> pd.DataFrame:
-    """Pit-lane durations per stop from OpenF1, shaped to the pit contract
-    (Team, Round, Driver, Stationary). Raises if OpenF1 access is restricted."""
+    """Stationary pit-stop times from OpenF1, shaped to the pit contract.
+
+    ``Stationary`` is OpenF1's ``stop_duration`` field. ``lane_duration`` and
+    deprecated ``pit_duration`` are full pit-lane transit times and are not used
+    for pit-crew performance.
+    """
     import requests
 
     UA = {"User-Agent": "f1-report/0.1"}
 
     def get(path: str, **params):
-        r = requests.get(f"https://api.openf1.org/v1/{path}", params=params,
-                         headers=UA, timeout=30)
-        if r.status_code == 401:
-            raise PermissionError(
-                "OpenF1 access restricted (likely a live session in progress). "
-                "Retry once the live session has ended, or use an API key.")
+        url = f"https://api.openf1.org/v1/{path}"
+        for attempt in range(5):
+            r = requests.get(url, params=params, headers=UA, timeout=30)
+            if r.status_code == 401:
+                raise PermissionError(
+                    "OpenF1 access restricted (likely a live session in progress). "
+                    "Retry once the live session has ended, or use an API key.")
+            if r.status_code != 429:
+                r.raise_for_status()
+                time.sleep(2.1)  # OpenF1 free tier: 30 requests/minute.
+                return r.json()
+            wait = 10 + attempt * 5
+            print(f"    OpenF1 rate limit hit; retrying in {wait}s...")
+            time.sleep(wait)
         r.raise_for_status()
-        return r.json()
 
     sessions = get("sessions", year=year, session_name="Race")
     rows = []
-    for s in sessions:
+    for rnd, s in enumerate(sessions, start=1):
         sk = s["session_key"]
-        drivers = {d["driver_number"]: _norm_team(d.get("team_name", ""))
-                   for d in get("drivers", session_key=sk)}
-        acro = {d["driver_number"]: d.get("name_acronym") for d in get("drivers", session_key=sk)}
+        driver_rows = get("drivers", session_key=sk)
+        teams = {d["driver_number"]: _norm_team(d.get("team_name", ""))
+                 for d in driver_rows}
+        acro = {d["driver_number"]: d.get("name_acronym") for d in driver_rows}
         for p in get("pit", session_key=sk):
-            if p.get("pit_duration") is None:
+            if p.get("stop_duration") is None:
                 continue
+            driver_number = p["driver_number"]
             rows.append({
-                "Team": drivers.get(p["driver_number"], ""),
-                "Round": s.get("meeting_key"),  # mapped to RoundNumber below if needed
-                "Driver": acro.get(p["driver_number"]),
-                "Stationary": p["pit_duration"],
+                "Round": rnd,
+                "Circuit": s.get("location"),
+                "SessionKey": sk,
+                "LapNumber": p.get("lap_number"),
+                "DriverNumber": driver_number,
+                "Driver": acro.get(driver_number),
+                "Team": teams.get(driver_number, ""),
+                "Stationary": p["stop_duration"],
+                "LaneDuration": p.get("lane_duration"),
             })
+        print(f"  R{rnd:>2} {s['location']}: pit stops ok")
     return pd.DataFrame(rows)
 
 

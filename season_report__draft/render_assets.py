@@ -1,9 +1,9 @@
 """Regenerate all chart images for the season report.
 
-Uses real 2025 data from data/season_2025_laps.parquet when present (build it
-with `python -m src.season_etl --year 2025`), else falls back to the synthetic
-season_data generator. Pit data uses the real pits parquet if present, else
-synthetic stationary times derived from the (real or dummy) pit-in events.
+Uses real 2025 lap data from data/season_2025_laps.parquet when present (build
+it with `python -m src.season_etl --year 2025`), else falls back to the synthetic
+season_data generator. Pit data uses real OpenF1 stationary stop times if the
+pits parquet is present, else synthetic stationary times derived from pit-in events.
 
     python season_report__draft/render_assets.py
 Writes PNGs into season_report__draft/assets/.
@@ -60,8 +60,8 @@ def main() -> None:
     charts.stops_distribution_bars(stops, ASSETS / "stops_distribution.png")
 
     if PITS_PARQUET.exists():
-        pits = pd.read_parquet(PITS_PARQUET)   # real OpenF1 pit-lane durations
-        print("[real pit data]")
+        pits = pd.read_parquet(PITS_PARQUET)   # real OpenF1 stop_duration
+        print("[real pit data - OpenF1 stop_duration]")
     else:
         pits = season_data.get_pit_stops(dry)  # synthetic until OpenF1 reopens
         print("[synthetic pit data — OpenF1 locked]")
@@ -75,6 +75,9 @@ def main() -> None:
     print(agg.round(2).sort_values("AvgStops", ascending=False).to_string())
     print("\nCircuit degradation (most -> least punishing):")
     print(circ.round(3).to_string())
+    print("\nPit-stop stationary times (s):")
+    print(pits.groupby("Team")["Stationary"].agg(["count", "median", "mean", "max"])
+          .sort_values("median").round(2).to_string())
     print(f"\nRendered assets into {ASSETS}")
 
 
