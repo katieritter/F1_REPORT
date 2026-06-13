@@ -290,9 +290,11 @@ def pit_performance(stops: pd.DataFrame, save_path: str | Path,
     """Horizontal box plot of pit-stop stationary times per team, ordered by
     median (fastest crew at top). Box width = consistency; long tail = fumbles."""
     theme.apply_light_theme()
+    cap = 9.0
     order = (stops.groupby("Team")["Stationary"].median()
              .sort_values().index.tolist())
-    data = [stops.loc[stops["Team"] == t, "Stationary"].values for t in order]
+    data = [stops.loc[stops["Team"] == t, "Stationary"].clip(upper=cap).values
+            for t in order]
     labels = [(short_names or {}).get(t, t) for t in order]
 
     fig, ax = plt.subplots(figsize=(7.8, 5.0))
@@ -312,6 +314,7 @@ def pit_performance(stops: pd.DataFrame, save_path: str | Path,
     ax.set_yticklabels(labels, fontfamily=theme.MONO_FONT, fontsize=9)
     ax.set_xlabel("PIT-STOP STATIONARY TIME (s)", fontfamily=theme.MONO_FONT,
                   fontsize=8.5, color=theme.INK_MUTED)
+    ax.set_xlim(left=1.5, right=cap + 0.4)
     for lbl in ax.get_xticklabels():
         lbl.set_fontfamily(theme.MONO_FONT)
         lbl.set_fontsize(8)
