@@ -102,22 +102,34 @@ def team_degradation(laps_corrected: pd.DataFrame, min_laps: int = 6) -> pd.Data
 
 
 def stops_per_car(laps: pd.DataFrame) -> pd.DataFrame:
-    """Real pit-stop count per car-race: a stop = ``TyreLife`` dropping between
-    consecutive laps (a new set fitted). This deliberately ignores FastF1's
-    ``Stint`` counter, which spuriously splits end-of-race laps into phantom
-    single-lap stints at some races (e.g. 2025 Canada) and badly overcounts
-    stops. See knowledge_base/pit-stop-count-fastf1.md."""
+    """Real pit-stop count per car-race.
+
+    A stop is counted when tyre age resets or the compound changes between
+    consecutive laps. This deliberately ignores FastF1's ``Stint`` counter,
+    which can split phantom single-lap stints at race end. The compound-change
+    check catches edge cases where a lap-2 tyre change keeps ``TyreLife`` at 1.
+    """
     d = laps.sort_values(["Round", "Driver", "LapNumber"]).copy()
-    d["_stop"] = d.groupby(["Round", "Driver"])["TyreLife"].diff() < 0
+    g = d.groupby(["Round", "Driver"])
+    prev_compound = g["Compound"].shift()
+    d["_stop"] = ((g["TyreLife"].diff() < 0)
+                  | (prev_compound.notna() & (d["Compound"] != prev_compound)))
     return (d.groupby(["Round", "Driver"])
             .agg(Stops=("_stop", "sum"), Circuit=("Circuit", "first"),
-                 Team=("Team", "first")).reset_index())
+                 Team=("Team", "first"), LapsCompleted=("LapNumber", "max"),
+                 RoundLaps=("RoundLaps", "first")).reset_index()
+            .assign(Representative=lambda x: x["LapsCompleted"] >= x["RoundLaps"] * 0.9))
 
 
 def stops_distribution(laps: pd.DataFrame) -> pd.DataFrame:
-    """Per circuit, the % of the field on each stop count (1-stop, 2-stop, ...).
-    Rows ordered by 2-stop share descending (most multi-stop circuits first)."""
+    """Per circuit, the % of representative cars on each stop count.
+
+    DNFs/very short races are excluded (>=90% race distance required), because
+    their 0-stop rows are not strategy choices. Stops >=4 are grouped as 4+.
+    """
     spc = stops_per_car(laps)
+    spc = spc[spc["Representative"]].copy()
+    spc["Stops"] = spc["Stops"].clip(upper=4)
     tab = spc.groupby(["Circuit", "Stops"]).size().unstack(fill_value=0)
     shares = tab.div(tab.sum(axis=1), axis=0) * 100
     sort_col = 2 if 2 in shares.columns else shares.columns.max()
@@ -127,7 +139,8 @@ def stops_distribution(laps: pd.DataFrame) -> pd.DataFrame:
 def strategy_aggression(laps: pd.DataFrame) -> pd.DataFrame:
     """Per team: average pit stops per car-race (x) and soft-usage share % (y) —
     the two axes of a strategy-aggression quadrant."""
-    avg_stops = stops_per_car(laps).groupby("Team")["Stops"].mean()
+    spc = stops_per_car(laps)
+    avg_stops = spc[spc["Representative"]].groupby("Team")["Stops"].mean()
     usage = compound_usage(laps)
     return pd.DataFrame({"AvgStops": avg_stops,
                          "SoftShare": usage["SOFT"] * 100}).dropna()

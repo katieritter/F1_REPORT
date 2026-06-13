@@ -7,7 +7,9 @@ occasionally splits the closing laps of a race into **phantom single-lap stints*
 that don't correspond to any real tyre change.
 
 The fix: count a stop only when the tyre is actually changed — i.e. when
-**`TyreLife` drops between consecutive laps** (a fresh set resets the age to ~1).
+**`TyreLife` drops between consecutive laps** (a fresh set resets the age to ~1)
+or when the **compound changes** between consecutive laps. The compound-change
+check catches lap-2 edge cases where a car changes tyre but `TyreLife` remains 1.
 
 ## The smoking gun: 2025 Canadian Grand Prix (Montreal)
 Counting by the stint counter, most of the field appeared to make **4–6 pit stops**
@@ -43,8 +45,10 @@ inflates every stops-per-race and strategy-aggression number.
 
 ## What we do in the report
 - `analysis.stops_per_car()` counts a stop as a lap where `TyreLife` falls below the
-  previous lap. Both the stops-per-race chart and the strategy-aggression quadrant
-  use it. The corrected season average is **~1.45 stops per car** (dry races).
+  previous lap or the compound changes. The stops-per-race chart and the
+  strategy-aggression quadrant exclude DNFs/short races by requiring at least 90%
+  race distance, so 0-stop retirements are not shown as strategy choices. The
+  corrected season average is **~1.55 stops per representative car** (dry races).
 - The slides note this explicitly so the method is transparent.
 
 ## Related
@@ -54,4 +58,4 @@ inflates every stops-per-race and strategy-aggression number.
 ## Takeaway
 FastF1's `Stint` and `PitInTime` fields can both fire on non-stops at the end of a
 race. For an accurate pit-stop count, **detect the tyre change itself**
-(`TyreLife` reset), not the stint number.
+(`TyreLife` reset or compound change), not the stint number.

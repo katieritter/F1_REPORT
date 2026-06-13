@@ -4,10 +4,17 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d033985e-bb23-43e1-8227-b10398c501ec" name="Changes" comment="fixed the pit stop data">
+    <list default="true" id="d033985e-bb23-43e1-8227-b10398c501ec" name="Changes" comment="pre chart modifications">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knowledge_base/pit-stop-count-fastf1.md" beforeDir="false" afterPath="$PROJECT_DIR$/knowledge_base/pit-stop-count-fastf1.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/season_report__draft/assets/compound_usage.png" beforeDir="false" afterPath="$PROJECT_DIR$/season_report__draft/assets/compound_usage.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/season_report__draft/assets/pit_performance.png" beforeDir="false" afterPath="$PROJECT_DIR$/season_report__draft/assets/pit_performance.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/season_report__draft/assets/stops_distribution.png" beforeDir="false" afterPath="$PROJECT_DIR$/season_report__draft/assets/stops_distribution.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/season_report__draft/assets/strategy_aggression.png" beforeDir="false" afterPath="$PROJECT_DIR$/season_report__draft/assets/strategy_aggression.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/season_report__draft/assets/team_degradation.png" beforeDir="false" afterPath="$PROJECT_DIR$/season_report__draft/assets/team_degradation.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/season_report__draft/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/season_report__draft/report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/season_report__draft/styles/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/season_report__draft/styles/theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/analysis.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/charts.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/charts.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +72,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1781274596463</updated>
-      <workItem from="1781274597553" duration="23524000" />
+      <workItem from="1781274597553" duration="26485000" />
     </task>
     <task id="LOCAL-00001" summary="aggregate 2025 report is almost done. the pit stop data still no ready">
       <option name="closed" value="true" />
@@ -83,7 +90,15 @@
       <option name="project" value="LOCAL" />
       <updated>1781370229645</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="pre chart modifications">
+      <option name="closed" value="true" />
+      <created>1781370997014</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1781370997014</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -92,6 +107,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="aggregate 2025 report is almost done. the pit stop data still no ready" />
     <MESSAGE value="fixed the pit stop data" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed the pit stop data" />
+    <MESSAGE value="pre chart modifications" />
+    <option name="LAST_COMMIT_MESSAGE" value="pre chart modifications" />
   </component>
 </project>

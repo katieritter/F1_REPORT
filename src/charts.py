@@ -96,7 +96,7 @@ def degradation_curves(laps: pd.DataFrame, save_path: str | Path,
     plt.close(fig)
 
 
-_STOP_COLORS = {1: "#a7c1d9", 2: "#ef8a2b", 3: "#c4271c"}
+_STOP_COLORS = {0: "#8f98a3", 1: "#a7c1d9", 2: "#ef8a2b", 3: "#c4271c", 4: "#5b1f8f"}
 
 
 def stops_distribution_bars(shares: pd.DataFrame, save_path: str | Path) -> None:
@@ -107,29 +107,29 @@ def stops_distribution_bars(shares: pd.DataFrame, save_path: str | Path) -> None
     stop_counts = sorted(shares.columns)
     x = range(len(circuits))
 
-    fig, ax = plt.subplots(figsize=(11.0, 4.8))
+    fig, ax = plt.subplots(figsize=(13.5, 6.2))
     bottom = [0.0] * len(circuits)
     for s in stop_counts:
         vals = shares[s].values
         ax.bar(x, vals, bottom=bottom, color=_STOP_COLORS.get(s, "#888"),
                edgecolor=theme.PAGE_BG, linewidth=0.6, zorder=3,
-               label=f"{s}-STOP")
+               label="4+-STOP" if s == 4 else f"{s}-STOP")
         bottom = [a + b for a, b in zip(bottom, vals)]
 
     ax.set_xticks(list(x))
     ax.set_xticklabels(circuits, rotation=45, ha="right",
-                       fontfamily=theme.MONO_FONT, fontsize=7)
+                       fontfamily=theme.MONO_FONT, fontsize=8)
     ax.set_ylim(0, 100)
     ax.set_ylabel("SHARE OF FIELD (%)", fontfamily=theme.MONO_FONT,
-                  fontsize=8.5, color=theme.INK_MUTED)
+                  fontsize=9.5, color=theme.INK_MUTED)
     for lbl in ax.get_yticklabels():
         lbl.set_fontfamily(theme.MONO_FONT)
-        lbl.set_fontsize(8)
+        lbl.set_fontsize(9)
     ax.grid(axis="y", zorder=0)
     ax.grid(axis="x", visible=False)
     ax.margins(x=0.01)
     leg = ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.01),
-                    ncol=len(stop_counts), fontsize=8.5, handlelength=1.1)
+                    ncol=len(stop_counts), fontsize=9.5, handlelength=1.1)
     for t in leg.get_texts():
         t.set_fontfamily(theme.MONO_FONT)
 
@@ -147,18 +147,18 @@ def strategy_aggression_quadrant(df: pd.DataFrame, save_path: str | Path,
     y = df["SoftShare"]
     xm, ym = x.median(), y.median()
 
-    fig, ax = plt.subplots(figsize=(7.8, 5.6))
+    fig, ax = plt.subplots(figsize=(10.0, 6.6))
     ax.axvline(xm, color=theme.HAIRLINE, lw=1.0, ls="--", zorder=1)
     ax.axhline(ym, color=theme.HAIRLINE, lw=1.0, ls="--", zorder=1)
 
     for team, row in df.iterrows():
         col = theme.team_color(team)
-        ax.scatter(row["AvgStops"], row["SoftShare"], s=120, color=col,
+        ax.scatter(row["AvgStops"], row["SoftShare"], s=165, color=col,
                    edgecolor=theme.PAGE_BG, linewidth=1.2, zorder=3)
         ax.annotate((short_names or {}).get(team, team),
                     (row["AvgStops"], row["SoftShare"]),
                     xytext=(7, 0), textcoords="offset points", va="center",
-                    fontsize=8, fontfamily=theme.MONO_FONT, color=theme.INK)
+                    fontsize=9.5, fontfamily=theme.MONO_FONT, color=theme.INK)
 
     # Quadrant corner labels.
     xlo, xhi = ax.get_xlim()
@@ -173,17 +173,17 @@ def strategy_aggression_quadrant(df: pd.DataFrame, save_path: str | Path,
     for cx, cy, label, ha, va in corners:
         ax.text(cx - pad if ha == "right" else cx + pad,
                 cy - pad if va == "top" else cy + pad,
-                label, ha=ha, va=va, fontsize=7.5, fontfamily=theme.MONO_FONT,
+                label, ha=ha, va=va, fontsize=8.5, fontfamily=theme.MONO_FONT,
                 color=theme.INK_MUTED, alpha=0.8,
                 transform=ax.transData)
 
     ax.set_xlabel("AVERAGE STOPS PER RACE", fontfamily=theme.MONO_FONT,
-                  fontsize=8.5, color=theme.INK_MUTED)
+                  fontsize=9.5, color=theme.INK_MUTED)
     ax.set_ylabel("SOFT USAGE (% of laps)", fontfamily=theme.MONO_FONT,
-                  fontsize=8.5, color=theme.INK_MUTED)
+                  fontsize=9.5, color=theme.INK_MUTED)
     for lbl in (*ax.get_xticklabels(), *ax.get_yticklabels()):
         lbl.set_fontfamily(theme.MONO_FONT)
-        lbl.set_fontsize(8)
+        lbl.set_fontsize(9)
 
     fig.tight_layout()
     fig.savefig(save_path)
@@ -199,7 +199,7 @@ def compound_usage_bars(shares: pd.DataFrame, save_path: str | Path,
     labels = [(short_names or {}).get(t, t) for t in teams]
     compounds = [c for c in ("SOFT", "MEDIUM", "HARD") if c in shares.columns]
 
-    fig, ax = plt.subplots(figsize=(7.8, 5.0))
+    fig, ax = plt.subplots(figsize=(10.0, 6.2))
     y = range(len(teams))
     left = [0.0] * len(teams)
     for comp in compounds:
@@ -210,25 +210,25 @@ def compound_usage_bars(shares: pd.DataFrame, save_path: str | Path,
         for i, (v, l) in enumerate(zip(vals, left)):
             if v >= 9:
                 ax.text(l + v / 2, i, f"{v:.0f}", ha="center", va="center",
-                        fontsize=7.5, fontfamily=theme.MONO_FONT,
+                        fontsize=9, fontfamily=theme.MONO_FONT,
                         color=theme.INK if comp in ("MEDIUM", "HARD") else "white")
         left = [a + b for a, b in zip(left, vals)]
 
     ax.set_yticks(list(y))
-    ax.set_yticklabels(labels, fontfamily=theme.MONO_FONT, fontsize=9)
+    ax.set_yticklabels(labels, fontfamily=theme.MONO_FONT, fontsize=10)
     ax.invert_yaxis()
     ax.set_xlim(0, 100)
     ax.set_xlabel("SHARE OF RACE LAPS (%)", fontfamily=theme.MONO_FONT,
-                  fontsize=8.5, color=theme.INK_MUTED)
+                  fontsize=9.5, color=theme.INK_MUTED)
     for lbl in ax.get_xticklabels():
         lbl.set_fontfamily(theme.MONO_FONT)
-        lbl.set_fontsize(8)
+        lbl.set_fontsize(9)
     ax.grid(axis="x", zorder=0)
     ax.grid(axis="y", visible=False)
     ax.spines["left"].set_visible(False)
     ax.tick_params(axis="y", length=0)
     leg = ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.01), ncol=3,
-                    fontsize=8.5, handlelength=1.1)
+                    fontsize=9.5, handlelength=1.1)
     for t in leg.get_texts():
         t.set_fontfamily(theme.MONO_FONT)
 
@@ -297,7 +297,7 @@ def pit_performance(stops: pd.DataFrame, save_path: str | Path,
             for t in order]
     labels = [(short_names or {}).get(t, t) for t in order]
 
-    fig, ax = plt.subplots(figsize=(7.8, 5.0))
+    fig, ax = plt.subplots(figsize=(10.0, 6.2))
     positions = list(range(len(order), 0, -1))  # first (fastest) at top
     bp = ax.boxplot(data, vert=False, positions=positions, patch_artist=True,
                     widths=0.62, showfliers=True,
@@ -311,13 +311,13 @@ def pit_performance(stops: pd.DataFrame, save_path: str | Path,
         patch.set_edgecolor(theme.INK)
 
     ax.set_yticks(positions)
-    ax.set_yticklabels(labels, fontfamily=theme.MONO_FONT, fontsize=9)
+    ax.set_yticklabels(labels, fontfamily=theme.MONO_FONT, fontsize=10)
     ax.set_xlabel("PIT-STOP STATIONARY TIME (s)", fontfamily=theme.MONO_FONT,
-                  fontsize=8.5, color=theme.INK_MUTED)
+                  fontsize=9.5, color=theme.INK_MUTED)
     ax.set_xlim(left=1.5, right=cap + 0.4)
     for lbl in ax.get_xticklabels():
         lbl.set_fontfamily(theme.MONO_FONT)
-        lbl.set_fontsize(8)
+        lbl.set_fontsize(9)
     ax.grid(axis="x", zorder=0)
     ax.grid(axis="y", visible=False)
     ax.spines["left"].set_visible(False)
@@ -337,25 +337,25 @@ def team_degradation_ranking(deg_df: pd.DataFrame, save_path: str | Path,
     labels = [(short_names or {}).get(t, t) for t in d["Team"]]
     colors = [theme.team_color(t) for t in d["Team"]]
 
-    fig, ax = plt.subplots(figsize=(7.8, 5.0))
+    fig, ax = plt.subplots(figsize=(10.0, 6.2))
     y = range(len(d))
     ax.barh(y, d["DegRate"], color=colors, edgecolor=theme.PAGE_BG,
             linewidth=1.0, zorder=3, height=0.72)
     ax.set_yticks(list(y))
-    ax.set_yticklabels(labels, fontfamily=theme.MONO_FONT, fontsize=9)
+    ax.set_yticklabels(labels, fontfamily=theme.MONO_FONT, fontsize=10)
     ax.invert_yaxis()  # best (lowest deg) at top
 
     for i, v in enumerate(d["DegRate"]):
         ax.text(v + d["DegRate"].max() * 0.012, i, f"+{v:.3f}",
-                va="center", ha="left", fontsize=8.5, fontfamily=theme.MONO_FONT,
+                va="center", ha="left", fontsize=9.5, fontfamily=theme.MONO_FONT,
                 color=theme.INK)
 
     ax.set_xlabel("DEGRADATION RATE (s/lap, fuel-corrected)",
-                  fontfamily=theme.MONO_FONT, fontsize=8.5, color=theme.INK_MUTED)
+                  fontfamily=theme.MONO_FONT, fontsize=9.5, color=theme.INK_MUTED)
     ax.set_xlim(0, d["DegRate"].max() * 1.16)
     for lbl in ax.get_xticklabels():
         lbl.set_fontfamily(theme.MONO_FONT)
-        lbl.set_fontsize(8)
+        lbl.set_fontsize(9)
     ax.grid(axis="x", zorder=0)
     ax.grid(axis="y", visible=False)
     ax.spines["left"].set_visible(False)

@@ -185,6 +185,15 @@ p { margin: 0 0 var(--sp-3) 0; }
 .split-side .chart-card img { max-width: 100%; max-height: 100%; width: auto; height: auto; }
 .split-side .chart-card figcaption { text-align: center; margin-top: 12px; }
 
+/* Chart-led split pages: narrower copy column, larger source chart display. */
+.split.chart-focus { align-items: center; gap: 22px; margin-top: 8px; }
+.split.chart-focus .split-main { flex: 0.72; justify-content: center; }
+.split.chart-focus .split-side { flex: 1.62; align-self: stretch; }
+.split.chart-focus .split-side .chart-card { padding: 14px; }
+.split.chart-focus .split-side .chart-card figcaption { margin-top: 8px; }
+.split.chart-focus .narrative .block { margin-bottom: 13px; }
+.split.chart-focus .narrative p { font-size: 10pt; line-height: 1.42; }
+
 /* Technical data table. */
 .data-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 10pt; }
 .data-table th {
