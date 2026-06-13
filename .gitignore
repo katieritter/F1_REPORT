@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+*.egg-info/
+dist/
+build/
+
+# FastF1 cache (can grow to GBs, fully reproducible)
+cache/
+
+# Downloaded font cache (re-fetched by src/fonts.py)
+fonts/
+
+# Generated report PDFs (rebuild with each report's build.py)
+single_race_report_draft/*.pdf
+season_report__draft/*.pdf
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data exports
+data/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+*.env

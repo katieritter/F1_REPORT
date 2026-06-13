@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Race Strategy &amp; Tyre Performance Analysis</title>
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/print.css">
+</head>
+<body>
+
+  <!-- ===================== PAGE 1 — TITLE ===================== -->
+  <section class="page title-page">
+
+    <div class="statusbar">
+      <span><span class="live">&#9679; STRATEGY</span> &nbsp;//&nbsp; ANALYSIS REPORT</span>
+      <span>HUNGARORING &middot; RND 13 &middot; 2024</span>
+    </div>
+
+    <div class="heading-block">
+      <div class="kicker">Race Strategy &amp; Tyre Performance</div>
+      <h1>Two-Stop<br>Advantage</h1>
+      <div class="sub">2024 Hungarian Grand Prix &mdash; Hungaroring</div>
+    </div>
+
+    <div class="readout">
+      <div class="row"><span class="label">Project</span><span class="dots"></span><span class="val">Strategy &amp; Tyre Performance</span></div>
+      <div class="row"><span class="label">Circuit</span><span class="dots"></span><span class="val">Hungaroring &middot; 4.381 km</span></div>
+      <div class="row"><span class="label">Lap Delta</span><span class="dots"></span><span class="val"><span class="hl">+4.218 s</span> &nbsp;2-stop vs 1-stop</span></div>
+      <div class="row"><span class="label">Adoption</span><span class="dots"></span><span class="val"><span class="hl">6 / 20</span> &nbsp;cars two-stopping</span></div>
+    </div>
+
+    <div class="tyre-strip">
+      <div class="seg soft"></div><div class="seg medium"></div><div class="seg hard"></div>
+    </div>
+    <div class="tyre-legend">&#9632; SOFT &nbsp;&nbsp; &#9632; MEDIUM &nbsp;&nbsp; &#9632; HARD</div>
+
+    <div class="footer">
+      <span><strong>Your Name</strong> &nbsp; your.email@example.com</span>
+      <span>FASTF1 &middot; PANDAS &middot; MATPLOTLIB &nbsp;//&nbsp; BUILD 001 / DRAFT</span>
+    </div>
+
+  </section>
+
+  <!-- ===================== PAGE 2 — STRATEGY GANTT ===================== -->
+  <section class="page flow">
+
+    <div class="statusbar">
+      <span><span class="live">&#9679; STINT MAP</span> &nbsp;//&nbsp; RACE STRATEGY</span>
+      <span>HUNGARORING &middot; 70 LAPS &middot; 20 CARS</span>
+    </div>
+
+    <div class="page-head">
+      <div class="kicker">Hero Visual</div>
+      <h2>The Strategy Grid</h2>
+    </div>
+
+    <figure class="chart-card fit">
+      <div class="imgwrap"><img src="assets/strategy_gantt.png" alt="Strategy Gantt — stint lengths by compound, drivers in finishing order"></div>
+      <figcaption>
+        One row per driver, finishing order top&ndash;bottom. Bar segments = stint length in laps, coloured by compound. &nbsp;
+        <span class="swatch soft"></span>SOFT &nbsp; <span class="swatch medium"></span>MEDIUM &nbsp; <span class="swatch hard"></span>HARD
+      </figcaption>
+    </figure>
+
+    <div class="footer">
+      <span><strong>Race Strategy &amp; Tyre Performance</strong> &nbsp;//&nbsp; STINT MAP</span>
+      <span>PAGE 02 / 10</span>
+    </div>
+
+  </section>
+
+  <!-- ===================== PAGE 3 — STRATEGY ANNOTATIONS ===================== -->
+  <section class="page flow">
+
+    <div class="statusbar">
+      <span><span class="live">&#9679; NOTES</span> &nbsp;//&nbsp; READING THE GRID</span>
+      <span>HUNGARORING &middot; RND 13 &middot; 2024</span>
+    </div>
+
+    <div class="page-head">
+      <div class="kicker">Analyst Briefing</div>
+      <h2>What the Grid Tells Us</h2>
+    </div>
+
+    <div class="notes">
+      <div class="note">
+        <div class="note-tag">01 &middot; The Winning Call</div>
+        <p>Piastri took the flag on a disciplined <strong>one-stop</strong> &mdash; a soft opening
+        stint converted to track position, then a long hard stint managed to the end.
+        At a circuit where overtaking is scarce, holding clean air mattered more than raw pace.</p>
+      </div>
+      <div class="note">
+        <div class="note-tag">02 &middot; Where the Field Split</div>
+        <p>Only <strong>6 of 20</strong> cars committed to a two-stop. The majority mirrored the
+        leader's one-stop, betting on track position over fresh-tyre pace &mdash; the safe,
+        consensus play at the Hungaroring.</p>
+      </div>
+      <div class="note">
+        <div class="note-tag">03 &middot; The Outlier</div>
+        <p>Verstappen and Norris took the aggressive route, stopping early for a short opening
+        soft stint before two longer stints &mdash; trading clean air for two windows of
+        fresh-rubber pace to attack from behind.</p>
+      </div>
+      <div class="note">
+        <div class="note-tag">04 &middot; The Late Gamble</div>
+        <p>P&eacute;rez ran an unusual medium&ndash;hard&ndash;<strong>soft</strong> sequence, fitting a
+        final soft set for a late charge &mdash; the only car carrying soft-tyre pace into the
+        closing laps. The undercut battle this created is examined on pages 6&ndash;7.</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span><strong>Race Strategy &amp; Tyre Performance</strong> &nbsp;//&nbsp; NOTES</span>
+      <span>PAGE 03 / 10</span>
+    </div>
+
+  </section>
+
+  <!-- ===================== PAGE 4 — TYRE DEGRADATION ===================== -->
+  <section class="page flow">
+
+    <div class="statusbar">
+      <span><span class="live">&#9679; DEGRADATION</span> &nbsp;//&nbsp; FUEL CORRECTION</span>
+      <span>QUICKLAPS ONLY &middot; 107% THRESHOLD</span>
+    </div>
+
+    <div class="page-head">
+      <div class="kicker">Technical &middot; Tyre Wear</div>
+      <h2>What Fuel Hides</h2>
+    </div>
+
+    <figure class="chart-card fit">
+      <div class="imgwrap"><img src="assets/degradation_curves.png" alt="Lap time vs tyre life per compound — raw and fuel-corrected"></div>
+    </figure>
+
+    <div class="dual-note">
+      <div><span class="t">Raw</span>Lap times often fall through a stint as fuel burns off &mdash; the hard tyre even appears to &ldquo;improve&rdquo;. Fuel load masks true wear.</div>
+      <div><span class="t">Corrected</span>Removing the fuel benefit (&asymp;0.055&nbsp;s/lap) reveals the real picture: every compound degrades, the soft steepest of all.</div>
+    </div>
+
+    <div class="footer">
+      <span><strong>Race Strategy &amp; Tyre Performance</strong> &nbsp;//&nbsp; DEGRADATION</span>
+      <span>PAGE 04 / 10</span>
+    </div>
+
+  </section>
+
+  <!-- ===================== PAGE 5 — COMPOUND COMPARISON ===================== -->
+  <section class="page flow">
+
+    <div class="statusbar">
+      <span><span class="live">&#9679; COMPOUND</span> &nbsp;//&nbsp; PACE vs DEGRADATION</span>
+      <span>FUEL-CORRECTED &middot; LINEAR FIT</span>
+    </div>
+
+    <div class="page-head">
+      <div class="kicker">Compound Comparison</div>
+      <h2>Fast but Fragile</h2>
+    </div>
+
+    <div class="split">
+      <div class="split-main">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Compound</th>
+              <th class="num">Deg Rate (s/lap)</th>
+              <th class="num">Pace vs Hard (s)</th>
+              <th class="num">Quicklaps</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="cmp"><span class="dot" style="background:var(--soft)"></span>SOFT</td>
+              <td class="num hl">+0.091</td><td class="num">&minus;0.73</td><td class="num">221</td>
+            </tr>
+            <tr>
+              <td class="cmp"><span class="dot" style="background:var(--medium)"></span>MEDIUM</td>
+              <td class="num">+0.062</td><td class="num">&minus;0.29</td><td class="num">601</td>
+            </tr>
+            <tr>
+              <td class="cmp"><span class="dot" style="background:var(--hard)"></span>HARD</td>
+              <td class="num">+0.037</td><td class="num">baseline</td><td class="num">506</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="interpret">
+          <span class="lead-tag">What it means</span>
+          <p>The soft offered roughly <strong>0.7&nbsp;s</strong> of pace over the hard, but degraded
+          almost <strong>2.5&times; faster</strong> (0.091 vs 0.037&nbsp;s per lap) &mdash; its advantage
+          erodes within a handful of laps, making it viable only for short stints. The medium sits
+          neatly between the two. This is exactly why the two-stoppers opened on a short soft burst
+          before switching to harder, more durable rubber for the long stints.</p>
+        </div>
+      </div>
+
+      <div class="split-side">
+        <figure class="chart-card">
+          <img src="assets/compound_pace_box.png" alt="Fuel-corrected lap-time distribution per compound">
+          <figcaption>Fuel-corrected quicklap distribution. Lower = faster.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span><strong>Race Strategy &amp; Tyre Performance</strong> &nbsp;//&nbsp; COMPOUND</span>
+      <span>PAGE 05 / 10</span>
+    </div>
+
+  </section>
+
+  <!-- ===================== PAGE 6 — UNDERCUT GAP CHART ===================== -->
+  <section class="page flow">
+
+    <div class="statusbar">
+      <span><span class="live">&#9679; BATTLE</span> &nbsp;//&nbsp; UNDERCUT CASE STUDY</span>
+      <span>HAM (P3) vs LEC (P4) &middot; LAPS 1&ndash;70</span>
+    </div>
+
+    <div class="page-head">
+      <div class="kicker">Case Study</div>
+      <h2>The Undercut That Stuck</h2>
+    </div>
+
+    <figure class="chart-card fit">
+      <div class="imgwrap"><img src="assets/undercut_gap.png" alt="Gap between Hamilton and Leclerc across the race, pit laps marked"></div>
+      <figcaption>
+        On-track gap (cumulative race time) between Hamilton and Leclerc. Hamilton pits first (L28) and rejoins behind;
+        fresh-hard pace overhauls Leclerc's worn mediums, so when Ferrari responds (L38) Leclerc emerges ~10&nbsp;s adrift.
+        Below the dashed line = Leclerc ahead; above = Leclerc behind.
+      </figcaption>
+    </figure>
+
+    <div class="footer">
+      <span><strong>Race Strategy &amp; Tyre Performance</strong> &nbsp;//&nbsp; UNDERCUT</span>
+      <span>PAGE 06 / 10</span>
+    </div>
+
+  </section>
+
+  <!-- ===================== PAGE 7 — TACTICAL NARRATIVE ===================== -->
+  <section class="page flow">
+
+    <div class="statusbar">
+      <span><span class="live">&#9679; TACTICAL</span> &nbsp;//&nbsp; WHY IT WORKED</span>
+      <span>HUNGARORING &middot; PIT LOSS &asymp; 20.5 s</span>
+    </div>
+
+    <div class="page-head">
+      <div class="kicker">Case Study &middot; Undercut</div>
+      <h2>Track Position, Bought</h2>
+    </div>
+
+    <div class="split">
+      <div class="split-main narrative">
+        <div class="block">
+          <span class="lead-tag">The Setup</span>
+          <p>Through the opening stint Hamilton and Leclerc ran nose-to-tail, never more than
+          1.5&nbsp;s apart &mdash; Leclerc marginally ahead on mediums, Hamilton shadowing on softs.
+          At a circuit where overtaking is near-impossible, the position would be settled in the
+          pit window, not on track.</p>
+        </div>
+        <div class="block">
+          <span class="lead-tag">The Move</span>
+          <p>Mercedes blinked first, pitting Hamilton on lap&nbsp;28 for fresh hards. He rejoined
+          some 20&nbsp;s down the road, but with a tyre-life advantage Ferrari could not answer: on
+          worn mediums Leclerc was conceding over a second a lap. Ten laps later Leclerc finally
+          stopped &mdash; and emerged 10&nbsp;s behind the car he had been leading.</p>
+        </div>
+        <div class="block">
+          <span class="lead-tag">Why It Worked &middot; and the Alternative</span>
+          <p>This is the undercut the degradation data predicts (pp.&nbsp;4&ndash;5): a ~1&nbsp;s/lap
+          fresh-tyre delta over a ten-lap overlap outweighs the ~20&nbsp;s pit loss once track
+          position is in play. Leclerc's newer rubber clawed the gap back to half a second by the
+          flag &mdash; but at a track this hard to pass, the race was lost on lap&nbsp;28. Covering
+          Hamilton immediately would have held the place, at the cost of a longer, more fragile
+          final stint.</p>
+        </div>
+      </div>
+
+      <div class="split-side">
+        <div style="flex:1; display:flex; flex-direction:column;">
+          <div class="panel-title">Key Numbers</div>
+          <div class="statlist">
+            <div class="stat"><div class="k">Pit Loss (Hungaroring)</div><div class="v">&asymp; 20.5 s</div></div>
+            <div class="stat"><div class="k">Hamilton Stop</div><div class="v">LAP 28 <span class="note">&rarr; HARD</span></div></div>
+            <div class="stat"><div class="k">Leclerc Stop</div><div class="v">LAP 38 <span class="note">&rarr; HARD</span></div></div>
+            <div class="stat"><div class="k">Gap before stops (L27)</div><div class="v">&minus;1.2 s <span class="note">LEC ahead</span></div></div>
+            <div class="stat"><div class="k">Gap after stops (L39)</div><div class="v"><span class="hl">+11.3 s</span> <span class="note">LEC behind</span></div></div>
+            <div class="stat"><div class="k">At the Flag</div><div class="v">+0.5 s <span class="note">HAM holds P3</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span><strong>Race Strategy &amp; Tyre Performance</strong> &nbsp;//&nbsp; TACTICAL</span>
+      <span>PAGE 07 / 10</span>
+    </div>
+
+  </section>
+
+  <!-- ===================== PAGE 8 — CADILLAC SPOTLIGHT ===================== -->
+  <section class="page flow">
+
+    <div class="statusbar">
+      <span><span class="live">&#9679; SPOTLIGHT</span> &nbsp;//&nbsp; CADILLAC F1 &middot; 2026</span>
+      <span>PROXY: SAUBER 2024</span>
+    </div>
+
+    <div class="page-head">
+      <div class="kicker">Team Focus &middot; Methodology</div>
+      <h2>Reading a New Entrant</h2>
+    </div>
+
+    <div class="callout">
+      PROXY &mdash; Cadillac enters F1 in 2026 with P&eacute;rez &amp; Bottas. With no 2026 race data yet, the method is
+      validated here on the Sauber pairing (Bottas the real-world bridge), ready to apply to Cadillac as the season unfolds.
+    </div>
+
+    <div class="chart-row">
+      <figure class="chart-card">
+        <img src="assets/proxy_strategy.png" alt="Stint strategies for the two proxy drivers vs the field median">
+        <figcaption>Stints vs the field-median one-stop (faded). Both cars diverged from consensus.</figcaption>
+      </figure>
+      <figure class="chart-card">
+        <img src="assets/proxy_pace.png" alt="Fuel-corrected pace vs tyre life for the two proxy drivers">
+        <figcaption>Tyre management: fuel-corrected pace vs tyre life. Flatter line = better.</figcaption>
+      </figure>
+    </div>
+
+    <div class="dual-note">
+      <div><span class="t">Strategy</span>Neither car mirrored the field's medium-first one-stop: one ran the hard long, the other split to a two-stop &mdash; a team gathering tyre data, not defending a position.</div>
+      <div><span class="t">Tyre Use</span>Bottas degraded at +0.044&nbsp;s/lap versus the sister car's +0.058 &mdash; stronger management and longer viable stints, despite a slower package.</div>
+    </div>
+
+    <div class="footer">
+      <span><strong>Race Strategy &amp; Tyre Performance</strong> &nbsp;//&nbsp; SPOTLIGHT</span>
+      <span>PAGE 08 / 10</span>
+    </div>
+
+  </section>
+
+  <!-- ===================== PAGE 9 — CADILLAC CONTEXT ===================== -->
+  <section class="page flow">
+
+    <div class="statusbar">
+      <span><span class="live">&#9679; SPOTLIGHT</span> &nbsp;//&nbsp; CONTEXT &amp; TRAJECTORY</span>
+      <span>CADILLAC F1 &middot; ROOKIE SEASON</span>
+    </div>
+
+    <div class="page-head">
+      <div class="kicker">Team Focus &middot; The Bigger Picture</div>
+      <h2>Year One Is About Data</h2>
+    </div>
+
+    <div class="split">
+      <div class="split-main narrative">
+        <div class="block">
+          <span class="lead-tag">The Context</span>
+          <p>Cadillac joins the grid in 2026 as Formula 1's eleventh team &mdash; General Motors'
+          works entry, running a customer Ferrari power unit in its opening campaign, with a
+          deeply experienced pairing in Sergio P&eacute;rez and Valtteri Bottas. For a new
+          constructor, a first season is measured as much in data and reliability as in points.</p>
+        </div>
+        <div class="block">
+          <span class="lead-tag">How They Compare</span>
+          <p>A new team's strategy signature tends to be reactive and exploratory &mdash; splitting
+          calls across the garage to harvest tyre data rather than committing to the field's
+          consensus play. That is exactly the pattern in the proxy opposite: two cars, two
+          different routes through the same race.</p>
+        </div>
+        <div class="block">
+          <span class="lead-tag">One Insight</span>
+          <p>The encouraging signal sits with the drivers. On the proxy data, Bottas's degradation
+          rate (+0.044&nbsp;s/lap) was comparable to the midfield's medium-compound average despite
+          a slower car &mdash; evidence of strong tyre management from the cockpit, exactly the
+          veteran trait a young team leans on while it builds.</p>
+        </div>
+      </div>
+
+      <div class="split-side">
+        <div style="flex:1; display:flex; flex-direction:column;">
+          <div class="panel-title">Season Watchlist</div>
+          <div class="statlist">
+            <div class="stat"><div class="k">Stint length vs field</div><div class="v"><span class="note">are they under- or over-running?</span></div></div>
+            <div class="stat"><div class="k">Deg rate vs midfield</div><div class="v"><span class="note">driver tyre management trend</span></div></div>
+            <div class="stat"><div class="k">Pit-stop execution</div><div class="v"><span class="note">stationary time vs benchmark</span></div></div>
+            <div class="stat"><div class="k">Strategy divergence</div><div class="v"><span class="note">one- vs two-stop call rate</span></div></div>
+            <div class="stat"><div class="k">Quali&rarr;race deg delta</div><div class="v"><span class="note">race-pace conversion</span></div></div>
+          </div>
+          <div class="callout" style="margin-top:auto;">Figures illustrative (proxy data). Swap in live Cadillac sessions as 2026 progresses.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span><strong>Race Strategy &amp; Tyre Performance</strong> &nbsp;//&nbsp; CONTEXT</span>
+      <span>PAGE 09 / 10</span>
+    </div>
+
+  </section>
+
+  <!-- ===================== PAGE 10 — METHODOLOGY & NEXT STEPS ===================== -->
+  <section class="page flow">
+
+    <div class="statusbar">
+      <span><span class="live">&#9679; METHOD</span> &nbsp;//&nbsp; TOOLS &amp; NEXT STEPS</span>
+      <span>APPENDIX &middot; PAGE 10</span>
+    </div>
+
+    <div class="page-head">
+      <div class="kicker">Appendix</div>
+      <h2>How This Was Built</h2>
+    </div>
+
+    <div class="split">
+      <div class="split-main narrative">
+        <div class="block">
+          <span class="lead-tag">Data Source</span>
+          <p>FastF1 3.x (MIT licence) &mdash; official F1 timing data for the selected session:
+          per-lap times, stint number, compound, tyre life and pit timestamps, returned as
+          pandas DataFrames.</p>
+        </div>
+        <div class="block">
+          <span class="lead-tag">Fuel Correction</span>
+          <p>Lap times normalised to end-of-race fuel by removing &asymp;0.055&nbsp;s/lap of
+          fuel-weight benefit (&asymp;1.7&nbsp;kg/lap &times; ~0.032&nbsp;s/kg). An industry
+          estimate, not an exact figure &mdash; it isolates tyre degradation from fuel burn-off.</p>
+        </div>
+        <div class="block">
+          <span class="lead-tag">Filtering</span>
+          <p>Quicklaps only: in- and out-laps, the opening lap, and anything beyond the 107%
+          threshold are excluded before any pace or degradation analysis.</p>
+        </div>
+        <div class="block">
+          <span class="lead-tag">Tools</span>
+          <p>Python 3 &middot; pandas &middot; NumPy &middot; matplotlib &middot; Jupyter.
+          Report typeset in HTML/CSS and rendered to PDF via headless Chromium.</p>
+        </div>
+      </div>
+
+      <div class="split-side">
+        <div style="flex:1; display:flex; flex-direction:column;">
+          <div class="panel-title">What I'd Build Next</div>
+          <div style="margin-top:14px;">
+            <div class="note">
+              <div class="note-tag">Monte Carlo Race Sim</div>
+              <p>Model thousands of strategy paths with randomised safety-car timing to compute optimal pit windows with confidence intervals.</p>
+            </div>
+            <div class="note">
+              <div class="note-tag">Circuit Classification</div>
+              <p>Cluster circuits by degradation severity and pit-loss time to predict the optimal strategy type before a weekend.</p>
+            </div>
+            <div class="note">
+              <div class="note-tag">Tyre-Cliff Detection</div>
+              <p>Fit piecewise regression to find the exact lap where a compound's performance drops non-linearly.</p>
+            </div>
+            <div class="note">
+              <div class="note-tag">Live Strategy Dashboard</div>
+              <p>A Streamlit / Plotly app ingesting FastF1 data in near-real-time to visualise strategy options as a race unfolds.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span><strong>Race Strategy &amp; Tyre Performance</strong> &nbsp;//&nbsp; APPENDIX</span>
+      <span>PAGE 10 / 10</span>
+    </div>
+
+  </section>
+
+</body>
+</html>

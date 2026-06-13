@@ -1,0 +1,37 @@
+/* ============================================================
+   Page layout — page size, internal padding, and page breaks.
+   Default is A4 LANDSCAPE (chart-heavy presentation deck). Add class
+   "portrait" to flip a single page to portrait. Padding lives on .page
+   (not @page margins) so spacing matches in browser preview AND PDF.
+   ============================================================ */
+
+@page {
+  size: A4 landscape;
+  margin: 0;            /* margins come from .page padding instead */
+}
+
+.page {
+  width: 297mm;
+  height: 210mm;
+  padding: 15mm 18mm 13mm 18mm;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-page);
+}
+.page:last-child { page-break-after: auto; }
+
+/* Portrait variant for any single page that needs it. */
+.page.portrait {
+  width: 210mm;
+  height: 297mm;
+}
+
+/* Avoid awkward breaks inside figures and tables. */
+.chart-card, table, figure { page-break-inside: avoid; }
+
+/* --- Screen-only preview: make the browser show page "sheets" --- */
+@media screen {
+  body { background: #e7e9ee; padding: 24px 0; }
+  .page { margin: 0 auto 24px; box-shadow: 0 2px 14px rgba(0, 0, 0, 0.15); }
+}
