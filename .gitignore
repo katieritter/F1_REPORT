@@ -20,8 +20,10 @@ season_report__draft/*.pdf
 # Jupyter
 .ipynb_checkpoints/
 
-# Data exports
-data/
+# Processed report inputs are intentionally committed; ignore other data exports
+data/*
+!data/season_2025_laps.parquet
+!data/season_2025_pits.parquet
 
 # IDE
 .idea/

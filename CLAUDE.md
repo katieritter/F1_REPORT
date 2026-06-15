@@ -55,6 +55,42 @@ Key caveats:
 - No free source has compound data before 2018.
 - Raw lap times improve through a stint as fuel burns off — fuel-correct before interpreting degradation slopes.
 
+## Report Data Files
+
+The season report uses small processed parquet files in `data/`. These files are
+committed to the repo so the report can be rebuilt on another computer without
+downloading the full FastF1 cache.
+
+| File | Source | Used for | Notes |
+|---|---|---|---|
+| `data/season_2025_laps.parquet` | FastF1 Race sessions | Degradation, compound usage, stop counts, strategy aggression | Main lap-level dataset; includes tyre compound, `TyreLife`, lap time, team, driver, round, and pit markers |
+| `data/season_2025_pits.parquet` | OpenF1 `/pit` endpoint | Pit-stop performance chart | Uses `stop_duration` as stationary box time; null stop-duration rows excluded |
+
+Important data-location rules:
+- `data/` contains the processed report inputs. These are tiny (~0.5 MB total) and
+  should travel with the repo.
+- `cache/` contains raw FastF1 HTTP/session cache. It is much larger, fully
+  reproducible, and should not be committed.
+- `.venv/` is local environment state and should not be committed.
+- Generated PDFs are ignored; regenerate them from the HTML/report scripts.
+
+To rebuild the season report from committed data:
+
+```powershell
+.venv\Scripts\python.exe season_report__draft\render_assets.py
+.venv\Scripts\python.exe season_report__draft\build.py
+```
+
+To rebuild the processed data from source APIs instead:
+
+```powershell
+.venv\Scripts\python.exe -m src.season_etl --year 2025 --refresh
+```
+
+That command repopulates `data/season_2025_laps.parquet` from FastF1 and
+`data/season_2025_pits.parquet` from OpenF1. It uses `cache/` for FastF1 caching
+but the cache itself remains untracked.
+
 ## FastF1 Data Model
 
 FastF1 organises data by **Session** (a race weekend event + session type):
@@ -108,7 +144,7 @@ F1_REPORT/
 ├── planning/        # research notes and project planning docs
 ├── knowledge_base/  # F1 domain reference material
 ├── cache/           # FastF1 local cache — never commit this
-├── data/            # exported CSVs or processed datasets
+├── data/            # committed processed parquet inputs for the season report
 └── requirements.txt
 ```
 
